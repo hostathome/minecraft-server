@@ -13,4 +13,4 @@ RUN chmod +x /hostathome-entrypoint.sh
 EXPOSE 25565
 VOLUME ["/data"]
 
-ENTRYPOINT ["/hostathome-entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
