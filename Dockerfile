@@ -7,8 +7,8 @@ ENV EULA=TRUE
 RUN mkdir -p /data/{save,mods,configs,backup} /defaults
 
 COPY configs/ /defaults/
-COPY entrypoint.sh /hostathome-entrypoint.sh
-RUN chmod +x /hostathome-entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 25565
 VOLUME ["/data"]

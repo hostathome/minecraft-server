@@ -1,9 +1,24 @@
 #!/bin/bash
 set -e
 
-# Copy defaults if missing
-[ ! -f /data/configs/config.yaml ] && cp /defaults/config.yaml /data/configs/
-[ ! -f /data/mods/mods.yaml ] && cp /defaults/mods.yaml /data/mods/
+# Ensure directories exist
+mkdir -p /data/configs /data/mods
+
+# Copy default config if missing
+if [ ! -f /data/configs/config.yaml ]; then
+    echo "HostAtHome: No config found, using built-in defaults..."
+    cp /defaults/config.yaml /data/configs/
+else
+    echo "HostAtHome: Using mounted configuration from /data/configs/config.yaml"
+fi
+
+# Copy default mods config if missing
+if [ ! -f /data/mods/mods.yaml ]; then
+    echo "HostAtHome: No mods config found, using built-in defaults..."
+    cp /defaults/mods.yaml /data/mods/
+else
+    echo "HostAtHome: Using mounted mods configuration"
+fi
 
 # Symlink folders to itzg's expected locations
 ln -sfn /data/save /data/world
