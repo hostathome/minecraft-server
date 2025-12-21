@@ -1,0 +1,18 @@
+# HostAtHome - Minecraft Mods Configuration
+
+# Mod loader: vanilla, paper, fabric, forge, spigot
+loader: vanilla
+
+# CurseForge mods (requires API key)
+curseforge:
+  api-key: ""
+  mods: []
+    # Example:
+    # - "jei"
+    # - "journeymap"
+
+# Modrinth mods (no API key needed)
+modrinth: []
+  # Example:
+  # - "sodium"
+  # - "lithium"
