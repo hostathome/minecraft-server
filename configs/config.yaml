@@ -1,19 +1,45 @@
 # HostAtHome - Minecraft Server Configuration
 
+__format__: properties
+
 server:
-  motd: "HostAtHome Minecraft Server"
-  max-players: 20
-  gamemode: survival
-  difficulty: normal
-  hardcore: false
-  pvp: true
+  motd:
+    value: "HostAtHome Minecraft Server"
+    key: motd
+  max-players:
+    value: 20
+    key: max-players
+  gamemode:
+    value: survival
+    key: gamemode
+  difficulty:
+    value: normal
+    key: difficulty
+  hardcore:
+    value: false
+    key: hardcore
+  pvp:
+    value: true
+    key: pvp
 
 world:
-  type: default
-  seed: ""
-  spawn-protection: 16
-  view-distance: 10
+  type:
+    value: default
+    key: level-type
+  seed:
+    value: ""
+    key: level-seed
+  spawn-protection:
+    value: 16
+    key: spawn-protection
+  view-distance:
+    value: 10
+    key: view-distance
 
 network:
-  online-mode: true
-  white-list: false
+  online-mode:
+    value: true
+    key: online-mode
+  white-list:
+    value: false
+    key: white-list
