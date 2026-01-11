@@ -9,7 +9,7 @@ RUN apt-get update && \
     apt-get install -y python3 python3-pip python3-yaml && \
     rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /data/data /data/configs /defaults
+RUN mkdir -p /defaults
 
 COPY configs/ /defaults/
 COPY config_mapper.py /config_mapper.py

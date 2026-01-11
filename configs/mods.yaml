@@ -1,18 +1,24 @@
 # HostAtHome - Minecraft Mods Configuration
+# Choose ONE: either a modpack OR individual mods (not both)
 
-# Mod loader: vanilla, paper, fabric, forge, spigot
+# Loader: vanilla, paper, fabric, forge, spigot
+# Note: If using a modpack, the loader is auto-detected from the modpack
 loader: vanilla
 
-# CurseForge mods (requires API key)
-curseforge:
-  api-key: ""
-  mods: []
-    # Example:
-    # - "jei"
-    # - "journeymap"
+# OPTION 1: Use a complete modpack
+# Uncomment and configure to use a CurseForge modpack
+modpack:
+  platform: curseforge  # Currently only curseforge is supported
+  slug: ""              # CurseForge modpack slug (e.g., "all-the-mods-9")
+  file-id: ""           # Optional: pin to specific version (e.g., "5436822")
+  api-key: ""           # Required: get from https://console.curseforge.com/
 
-# Modrinth mods (no API key needed)
-modrinth: []
-  # Example:
-  # - "sodium"
-  # - "lithium"
+# OPTION 2: Use individual mods
+# Configure if you're NOT using a modpack above
+mods:
+  curseforge:
+    api-key: ""         # Get from https://console.curseforge.com/
+    slugs: []           # Mod slugs (e.g., ["jei", "journeymap"])
+
+  modrinth:
+    projects: []        # Modrinth project names (e.g., ["sodium", "lithium"])

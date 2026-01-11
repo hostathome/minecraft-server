@@ -2,6 +2,11 @@
 
 __format__: properties
 
+# Environment variables for the Docker container
+# (not written to server.properties)
+__env__:
+  memory: 2G  # Increase to 4-6G for modpacks
+
 server:
   motd:
     value: "HostAtHome Minecraft Server"

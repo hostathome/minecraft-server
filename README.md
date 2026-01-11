@@ -21,37 +21,84 @@ hostathome run minecraft
 Edit `minecraft-server/configs/config.yaml`:
 
 ```yaml
+__env__:
+  memory: 2G  # Increase to 4-6G for modpacks
+
 server:
-  motd: "My Minecraft Server"
-  max-players: 20
-  gamemode: survival
-  difficulty: normal
+  motd:
+    value: "My Minecraft Server"
+    key: motd
+  max-players:
+    value: 20
+    key: max-players
+  gamemode:
+    value: survival
+    key: gamemode
+  difficulty:
+    value: normal
+    key: difficulty
 
 world:
-  seed: "my-custom-seed"
-  view-distance: 12
+  seed:
+    value: "my-custom-seed"
+    key: level-seed
+  view-distance:
+    value: 12
+    key: view-distance
 
 network:
-  online-mode: true
-  white-list: false
+  online-mode:
+    value: true
+    key: online-mode
+  white-list:
+    value: false
+    key: white-list
 ```
 
-## Mods
+## Mods and Modpacks
 
-Edit `minecraft-server/mods/mods.yaml`:
+Edit `minecraft-server/configs/mods.yaml` - choose **ONE** option:
+
+### Option 1: Use a CurseForge Modpack
+
+```yaml
+loader: vanilla  # Ignored for modpacks, auto-detected
+
+modpack:
+  platform: curseforge
+  slug: "all-the-mods-9"           # CurseForge modpack slug
+  file-id: ""                       # Optional: pin specific version
+  api-key: "your-curseforge-key"   # Required: get from https://console.curseforge.com/
+```
+
+Then increase memory in `config.yaml`:
+```yaml
+__env__:
+  memory: 6G  # Modpacks need more memory
+```
+
+### Option 2: Use Individual Mods
 
 ```yaml
 loader: fabric  # vanilla, paper, fabric, forge
 
-modrinth:
-  - lithium
-  - sodium
+mods:
+  curseforge:
+    api-key: "your-api-key"
+    slugs:
+      - jei
+      - journeymap
 
-curseforge:
-  api-key: "your-api-key"
-  mods:
-    - jei
+  modrinth:
+    projects:
+      - lithium
+      - sodium
 ```
+
+### Getting Your API Keys
+
+- **CurseForge**: https://console.curseforge.com/
+- **Modrinth**: Not required, but recommended for faster downloads
 
 ## Directory Structure
 
