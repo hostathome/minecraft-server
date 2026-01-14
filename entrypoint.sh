@@ -5,12 +5,16 @@ set -e
 if [ ! -f /configs/config.yaml ] || grep -q "This will be replaced" /configs/config.yaml 2>/dev/null; then
     echo "HostAtHome: Copying default config.yaml..."
     cp /defaults/config.yaml /configs/config.yaml
+    chown 1000:1000 /configs/config.yaml
+    chmod 666 /configs/config.yaml
 fi
 
 # Copy default mods config if missing
 if [ ! -f /configs/mods.yaml ]; then
     echo "HostAtHome: Copying default mods.yaml..."
     cp /defaults/mods.yaml /configs/mods.yaml
+    chown 1000:1000 /configs/mods.yaml
+    chmod 666 /configs/mods.yaml
 fi
 
 echo "HostAtHome: Using configuration from /configs/"
