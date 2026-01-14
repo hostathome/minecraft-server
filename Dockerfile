@@ -12,9 +12,11 @@ RUN apt-get update && \
 RUN mkdir -p /defaults
 
 COPY configs/ /defaults/
-COPY config_mapper.py /config_mapper.py
+COPY scripts/ /scripts/
+RUN chmod +x /scripts/*.sh /scripts/*.py
+
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh /config_mapper.py
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 25565
 VOLUME ["/data"]

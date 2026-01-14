@@ -1,57 +1,24 @@
 #!/bin/bash
 set -e
 
-# Copy default config if missing or placeholder
-if [ ! -f /configs/config.yaml ] || grep -q "This will be replaced" /configs/config.yaml 2>/dev/null; then
-    echo "HostAtHome: Copying default config.yaml..."
-    cp /defaults/config.yaml /configs/config.yaml
-    chown 1000:1000 /configs/config.yaml
-    chmod 666 /configs/config.yaml
-fi
+# Source utilities for consistent logging
+source /scripts/utils.sh
 
-# Copy default mods config if missing
-if [ ! -f /configs/mods.yaml ]; then
-    echo "HostAtHome: Copying default mods.yaml..."
-    cp /defaults/mods.yaml /configs/mods.yaml
-    chown 1000:1000 /configs/mods.yaml
-    chmod 666 /configs/mods.yaml
-fi
+# Execute setup stage
+log_stage "Setup"
+/scripts/setup.sh
 
-echo "HostAtHome: Using configuration from /configs/"
+# Execute configuration stage: convert YAML → environment variables
+log_stage "Configuration"
+eval "$(python3 /scripts/config.py)"
 
-# Generate server.properties from YAML
-echo "HostAtHome: Generating server.properties from config.yaml..."
-python3 /config_mapper.py /configs/config.yaml > /data/server.properties
+# Execute mods summary stage
+log_stage "Mods"
+/scripts/mods.sh
 
-# Load environment variables from config.yaml
-echo "HostAtHome: Loading environment variables from config.yaml..."
-eval "$(python3 /config_mapper.py /configs/config.yaml --env)"
+# Execute logging/summary stage
+log_stage "Summary"
+/scripts/logging.sh
 
-# Apply mods configuration
-if [ -f /configs/mods.yaml ]; then
-    echo "HostAtHome: Processing mods configuration..."
-    eval "$(python3 /config_mapper.py /configs/mods.yaml --mods)"
-fi
-
-# Tell itzg to use our properties
-export OVERRIDE_SERVER_PROPERTIES=false
-export SKIP_SERVER_PROPERTIES=true
-
-# Log configuration mode
-echo ""
-echo "HostAtHome Configuration:"
-if [ -n "$MODPACK_PLATFORM" ]; then
-    echo "  Mode: Modpack ($CF_SLUG)"
-    if [ -n "$CF_FILE_ID" ]; then
-        echo "  Version: Pinned to file ID $CF_FILE_ID"
-    fi
-else
-    echo "  Mode: Individual mods"
-    echo "  Loader: ${TYPE:-VANILLA}"
-fi
-[ -n "$MEMORY" ] && echo "  Memory: $MEMORY"
-[ -n "$CF_API_KEY" ] && echo "  CurseForge: enabled"
-[ -n "$MODRINTH_PROJECTS" ] && echo "  Modrinth: enabled"
-echo ""
-
+# Hand off to itzg minecraft container
 exec /start

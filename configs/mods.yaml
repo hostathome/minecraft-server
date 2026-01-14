@@ -1,24 +1,40 @@
 # HostAtHome - Minecraft Mods Configuration
-# Choose ONE: either a modpack OR individual mods (not both)
+# Choose ONE: either a modpack OR individual mods (leave the other empty)
+# Maps to itzg/minecraft-server environment variables
+# https://docker-minecraft-server.readthedocs.io/en/latest/mods-and-plugins/
 
-# Loader: vanilla, paper, fabric, forge, spigot
-# Note: If using a modpack, the loader is auto-detected from the modpack
-loader: vanilla
+loader:
+  type:
+    key: TYPE
+    value: vanilla  # vanilla, paper, fabric, forge, spigot
 
-# OPTION 1: Use a complete modpack
-# Uncomment and configure to use a CurseForge modpack
+# MODPACK MODE: Configure ONE modpack from CurseForge
+# Leave empty to use individual mods instead
 modpack:
-  platform: curseforge  # Currently only curseforge is supported
-  slug: ""              # CurseForge modpack slug (e.g., "all-the-mods-9")
-  file-id: ""           # Optional: pin to specific version (e.g., "5436822")
-  api-key: ""           # Required: get from https://console.curseforge.com/
+  platform:
+    key: MODPACK_PLATFORM
+    value: ""  # Set to "AUTO_CURSEFORGE" to enable modpack mode
+  slug:
+    key: CF_SLUG
+    value: ""  # CurseForge modpack slug (e.g., "all-the-mods-9")
+  file-id:
+    key: CF_FILE_ID
+    value: ""  # Optional: pin to specific version (e.g., "5436822")
+  api-key:
+    key: CF_API_KEY
+    value: ""  # Required: get from https://console.curseforge.com/
 
-# OPTION 2: Use individual mods
-# Configure if you're NOT using a modpack above
-mods:
-  curseforge:
-    api-key: ""         # Get from https://console.curseforge.com/
-    slugs: []           # Mod slugs (e.g., ["jei", "journeymap"])
+# INDIVIDUAL MODS MODE: Configure individual mods from CurseForge/Modrinth
+# Leave empty to use modpack mode instead
+curseforge:
+  api-key:
+    key: CF_API_KEY
+    value: ""  # Get from https://console.curseforge.com/
+  mods:
+    key: CF_MODLIST
+    value: ""  # Comma-separated mod slugs (e.g., "jei,journeymap,lithium")
 
-  modrinth:
-    projects: []        # Modrinth project names (e.g., ["sodium", "lithium"])
+modrinth:
+  projects:
+    key: MODRINTH_PROJECTS
+    value: ""  # Comma-separated project names (e.g., "sodium,lithium,starlight")

@@ -18,103 +18,113 @@ hostathome run minecraft
 
 ## Configuration
 
-Edit `minecraft-server/configs/config.yaml`:
+Edit `configs/config.yaml`. Each setting specifies a `key` (itzg environment variable) and a `value`:
 
 ```yaml
-__env__:
-  memory: 2G  # Increase to 4-6G for modpacks
+java:
+  version:
+    key: VERSION
+    value: LATEST
+  memory:
+    key: MEMORY
+    value: 2G
 
 server:
   motd:
+    key: MOTD
     value: "My Minecraft Server"
-    key: motd
   max-players:
+    key: MAX_PLAYERS
     value: 20
-    key: max-players
   gamemode:
+    key: GAMEMODE
     value: survival
-    key: gamemode
   difficulty:
+    key: DIFFICULTY
     value: normal
-    key: difficulty
 
 world:
+  level-type:
+    key: LEVEL_TYPE
+    value: default
   seed:
-    value: "my-custom-seed"
-    key: level-seed
+    key: SEED
+    value: ""
   view-distance:
+    key: VIEW_DISTANCE
     value: 12
-    key: view-distance
 
 network:
   online-mode:
-    value: true
-    key: online-mode
+    key: ONLINE_MODE
+    value: "TRUE"
   white-list:
-    value: false
-    key: white-list
+    key: WHITE_LIST
+    value: "FALSE"
 ```
 
-## Mods and Modpacks
+See [itzg documentation](https://docker-minecraft-server.readthedocs.io/en/latest/variables/) for all available variables.
 
-Edit `minecraft-server/configs/mods.yaml` - choose **ONE** option:
+## Mods
 
-### Option 1: Use a CurseForge Modpack
+Edit `configs/mods.yaml` to configure mods:
+
+### CurseForge Modpack
 
 ```yaml
-loader: vanilla  # Ignored for modpacks, auto-detected
+loader:
+  type:
+    key: TYPE
+    value: vanilla
 
 modpack:
-  platform: curseforge
-  slug: "all-the-mods-9"           # CurseForge modpack slug
-  file-id: ""                       # Optional: pin specific version
-  api-key: "your-curseforge-key"   # Required: get from https://console.curseforge.com/
+  slug:
+    key: CF_SLUG
+    value: "all-the-mods-9"
+  file-id:
+    key: CF_FILE_ID
+    value: ""
+  api-key:
+    key: CF_API_KEY
+    value: "your-api-key"
 ```
 
-Then increase memory in `config.yaml`:
+### Individual Mods
+
 ```yaml
-__env__:
-  memory: 6G  # Modpacks need more memory
+loader:
+  type:
+    key: TYPE
+    value: fabric
+
+curseforge:
+  api-key:
+    key: CF_API_KEY
+    value: "your-api-key"
+  mods:
+    key: CF_MODLIST
+    value: "jei,journeymap"
+
+modrinth:
+  projects:
+    key: MODRINTH_PROJECTS
+    value: "sodium,lithium"
 ```
 
-### Option 2: Use Individual Mods
-
-```yaml
-loader: fabric  # vanilla, paper, fabric, forge
-
-mods:
-  curseforge:
-    api-key: "your-api-key"
-    slugs:
-      - jei
-      - journeymap
-
-  modrinth:
-    projects:
-      - lithium
-      - sodium
-```
-
-### Getting Your API Keys
-
-- **CurseForge**: https://console.curseforge.com/
-- **Modrinth**: Not required, but recommended for faster downloads
-
-## Directory Structure
+## Architecture
 
 ```
-minecraft-server/
-├── save/           # World data
-├── mods/           # Plugins and mods
-│   └── mods.yaml   # Mod configuration
-├── configs/
-│   └── config.yaml # Server configuration
-└── backup/         # Your backups
+entrypoint.sh
+├── setup.sh → Copy default configs if missing
+├── config.py → Extract config → export env vars
+├── mods.sh → Display mod configuration
+├── logging.sh → Show configuration summary
+└── /start → Hand off to itzg
 ```
 
-## Docker (Development)
-
-```bash
-docker build -t minecraft-server .
-docker run -d -p 1024:25565 -v $(pwd):/data minecraft-server
-```
+**Scripts**:
+- `config.py` - Parses YAML, outputs environment variable exports
+- `setup.sh` - File initialization, copy defaults
+- `mods.sh` - Mod configuration display
+- `logging.sh` - Configuration summary
+- `utils.sh` - Shared logging and utilities

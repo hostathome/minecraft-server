@@ -1,51 +1,53 @@
 # HostAtHome - Minecraft Server Configuration
+# Maps directly to itzg/minecraft-server environment variables
+# https://docker-minecraft-server.readthedocs.io/en/latest/variables/
 
-__format__: properties
-
-# Environment variables for the Docker container
-# (not written to server.properties)
-__env__:
-  version: LATEST  # Minecraft version (e.g., 1.20.1, LATEST, SNAPSHOT)
-  memory: 2G  # Increase to 4-6G for modpacks
+java:
+  version:
+    key: VERSION
+    value: LATEST
+  memory:
+    key: MEMORY
+    value: 2G
 
 server:
   motd:
+    key: MOTD
     value: "HostAtHome Minecraft Server"
-    key: motd
   max-players:
+    key: MAX_PLAYERS
     value: 20
-    key: max-players
   gamemode:
+    key: GAMEMODE
     value: survival
-    key: gamemode
   difficulty:
+    key: DIFFICULTY
     value: normal
-    key: difficulty
   hardcore:
-    value: false
-    key: hardcore
+    key: HARDCORE
+    value: "FALSE"
   pvp:
-    value: true
-    key: pvp
+    key: PVP
+    value: "TRUE"
 
 world:
-  type:
+  level-type:
+    key: LEVEL_TYPE
     value: default
-    key: level-type
   seed:
+    key: SEED
     value: ""
-    key: level-seed
   spawn-protection:
+    key: SPAWN_PROTECTION
     value: 16
-    key: spawn-protection
   view-distance:
+    key: VIEW_DISTANCE
     value: 10
-    key: view-distance
 
 network:
   online-mode:
-    value: true
-    key: online-mode
+    key: ONLINE_MODE
+    value: "TRUE"
   white-list:
-    value: false
-    key: white-list
+    key: WHITE_LIST
+    value: "FALSE"
