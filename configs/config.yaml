@@ -2,13 +2,16 @@
 # Maps directly to itzg/minecraft-server environment variables
 # https://docker-minecraft-server.readthedocs.io/en/latest/variables/
 
-java:
+environment:
   version:
     key: VERSION
     value: LATEST
   memory:
     key: MEMORY
     value: 2G
+  eula:
+    key: EULA
+    value: "TRUE"
 
 server:
   motd:

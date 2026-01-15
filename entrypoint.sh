@@ -21,4 +21,4 @@ log_stage "Summary"
 /scripts/logging.sh
 
 # Hand off to itzg minecraft container
-exec /start
+exec /image/scripts/start

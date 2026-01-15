@@ -7,9 +7,7 @@ log_info "Initializing file structure..."
 
 # Ensure required directories exist
 ensure_dir /configs
-ensure_dir /data/save
-ensure_dir /data/mods
-ensure_dir /data/backup
+ensure_dir /data
 
 # Copy default config.yaml if missing or placeholder
 if copy_if_missing /defaults/config.yaml /configs/config.yaml; then
