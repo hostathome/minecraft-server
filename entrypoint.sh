@@ -12,10 +12,6 @@ log_stage "Setup"
 log_stage "Configuration"
 eval "$(python3 /scripts/config.py)"
 
-# Execute mods summary stage
-log_stage "Mods"
-/scripts/mods.sh
-
 # Execute logging/summary stage
 log_stage "Summary"
 /scripts/logging.sh

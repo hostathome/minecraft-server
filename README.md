@@ -111,20 +111,32 @@ modrinth:
     value: "sodium,lithium"
 ```
 
+## Data & Configuration
+
+The server uses two volumes:
+
+- **`configs/`** → `/configs` (mounted volume)
+  - `config.yaml` - Server settings
+  - `mods.yaml` - Mod configuration
+  - *Changes to these files take effect on container restart*
+
+- **`data/`** → `/data` (mounted volume)
+  - `save/` - World saves
+  - `backup/` - User backups
+  - Runtime data and minecraft server files
+
 ## Architecture
 
 ```
 entrypoint.sh
 ├── setup.sh → Copy default configs if missing
-├── config.py → Extract config → export env vars
-├── mods.sh → Display mod configuration
-├── logging.sh → Show configuration summary
-└── /start → Hand off to itzg
+├── config.py → Parse YAML + mods.yaml → export env vars
+├── logging.sh → Display configuration & mod summary
+└── /start → Hand off to itzg minecraft-server
 ```
 
 **Scripts**:
-- `config.py` - Parses YAML, outputs environment variable exports
-- `setup.sh` - File initialization, copy defaults
-- `mods.sh` - Mod configuration display
-- `logging.sh` - Configuration summary
-- `utils.sh` - Shared logging and utilities
+- `config.py` - Parses `config.yaml` and `mods.yaml`, outputs environment variable exports (with logging)
+- `setup.sh` - File initialization, copies default configs if missing
+- `logging.sh` - Displays configuration and mod setup summary
+- `utils.sh` - Shared logging and utility functions

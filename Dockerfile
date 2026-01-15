@@ -19,6 +19,6 @@ COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 EXPOSE 25565
-VOLUME ["/data"]
+VOLUME ["/configs", "/data"]
 
 ENTRYPOINT ["/entrypoint.sh"]

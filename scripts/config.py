@@ -81,6 +81,9 @@ def main():
     exports.extend(extract_exports(config))
     exports.extend(extract_exports(mods))
 
+    # Count user settings (before adding system settings)
+    user_settings_count = len(exports)
+
     # If modpack mode is enabled, set MODPACK_PLATFORM
     if detect_modpack_mode(mods):
         exports.append("export MODPACK_PLATFORM='AUTO_CURSEFORGE'")
@@ -88,6 +91,9 @@ def main():
     # Tell itzg to use environment variables
     exports.append("export OVERRIDE_SERVER_PROPERTIES='false'")
     exports.append("export SKIP_SERVER_PROPERTIES='true'")
+
+    # Output logging info to stderr
+    print(f"[HostAtHome] Configuration loaded: {user_settings_count} settings applied", file=sys.stderr)
 
     for export_line in exports:
         print(export_line)
