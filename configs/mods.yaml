@@ -6,7 +6,7 @@
 loader:
   type:
     key: TYPE
-    value: vanilla  # vanilla, paper, fabric, forge, spigot
+    value: VANILLA  # VANILLA, PAPER, FABRIC, FORGE, SPIGOT
 
 # MODPACK MODE: Configure ONE modpack from CurseForge
 # Leave empty to use individual mods instead
