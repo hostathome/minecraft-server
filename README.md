@@ -16,8 +16,8 @@ hostathome run minecraft
 
 | Port | Protocol | Purpose |
 |------|----------|---------|
-| 1024 | TCP | Player connections |
-| 1025 | TCP | RCON |
+| 30065 | TCP | Player connections |
+| 30066 | TCP | RCON |
 
 ## Configuration
 
